@@ -65,3 +65,8 @@ input[type="color"]:focus,
     margin-bottom: 1.5em;
   }
 }
+
+// Category icon from our connector is only meant for the category cards
+.kc-box-icon {
+  display: none;
+}
