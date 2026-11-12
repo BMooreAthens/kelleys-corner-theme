@@ -1,6 +1,6 @@
 // Sidebar Enhancements
 :root {
-  --d-sidebar-width: 14em;
+  --d-sidebar-width: 17em;
 }
 
 body.has-sidebar-page {
@@ -25,26 +25,55 @@ body.has-sidebar-page {
     );
     margin: var(--top-offset) 0 var(--bottom-offset);
     background-color: var(--secondary);
-    border-radius: var(--sublime-border-radius);
+    border-radius: 2px;
     top: calc(var(--header-offset) + 30px);
     border-top: 4px solid var(--sidebar-highlight);
+    box-shadow: 0 2px 10px 0 rgb(31, 50, 86, 0.06);
+
+    .sidebar-sections {
+      padding: 1em 0.75em 0;
+    }
+
+    .sidebar-section-header-text {
+      font-size: var(--font-up-1);
+      font-weight: 600;
+      color: var(--primary);
+    }
 
     .sidebar-section-wrapper
       .sidebar-section-content
       .sidebar-section-link-wrapper,
     .sidebar-more-section-links-details {
       .sidebar-section-link {
+        border-radius: var(--sublime-border-radius);
+
         &:hover,
-        &:focus,
-        &.active {
-          color: var(--tertiary);
+        &:focus {
+          color: var(--kc-blue);
           background: none;
 
           .sidebar-section-link-prefix.icon {
-            color: var(--tertiary);
+            color: var(--kc-blue);
+          }
+        }
+
+        &.active {
+          color: var(--kc-blue);
+          background: var(--kc-blue-soft);
+          font-weight: 500;
+
+          .sidebar-section-link-prefix.icon {
+            color: var(--kc-blue);
           }
         }
       }
+    }
+
+    // "All categories" / "All tags" links
+    .sidebar-section-link[data-link-name="all-categories"],
+    .sidebar-section-link[data-link-name="all-tags"] {
+      color: var(--kc-blue);
+      font-size: var(--font-down-1);
     }
   }
 }
@@ -67,41 +96,19 @@ body.has-sidebar-page {
   background: var(--bg-gradient);
 }
 
-// Search Banner
-.custom-search-banner-wrap .search-menu {
-  .search-input {
-    border-radius: 0.25em;
-
-    input[type="text"] {
-      border: 1px solid transparent;
-      border-radius: var(--sublime-border-radius);
-
-      &:focus {
-        outline: 3px solid rgb(var(--primary-rgb), 0.35);
-      }
-    }
-  }
-}
-
-.display-search-banner {
-  #main-outlet {
-    padding-top: 2em;
-  }
-}
-
 // Main Container
 body #main-outlet {
   margin-top: 30px;
   margin-bottom: 50px;
   background: var(--secondary);
-  border: 2px dotted #01949a;
-  border-radius: var(--sublime-border-radius);
-  padding: 3em 3em 5%;
-  max-width: 1150px;
+  border: 1px dotted var(--kc-frame-border);
+  border-radius: 0;
+  padding: 1.75em 1.75em 5%;
+  max-width: 1300px;
   padding-bottom: 5% !important; // overriding inline style
 
   @media screen and (width <= 700px) {
-    padding: 1.5em;
+    padding: 1em;
     margin-top: 0;
   }
 
@@ -128,53 +135,182 @@ body.has-full-page-chat #main-outlet {
   border-top: 4px solid var(--sidebar-highlight);
 }
 
-// Nav
-.nav-pills li a {
-  border: 1px solid transparent;
-  border-radius: var(--sublime-border-radius);
+// Navigation bar
+.navigation-container {
+  align-items: center;
+  padding-bottom: 2.25em;
+  margin-bottom: 2.5em;
+  border-bottom: 1px solid var(--kc-border);
 
-  &:hover {
-    border-radius: var(--sublime-border-radius);
-    transition: all 0.3s linear;
-    background-color: transparent;
-    color: var(--tertiary);
-    border: 1px dashed var(--tertiary);
+  .category-breadcrumb .select-kit-header {
+    background: var(--secondary);
+    border: 1px solid var(--primary-low-mid);
+    border-radius: 2px;
+    padding: 0.6em 0.9em;
   }
 
-  &.active {
-    border-radius: var(--sublime-border-radius);
-    transition: all 0.3s linear;
-    color: var(--secondary);
-    border: 1px solid var(--sublime-border-radius);
-    background: #4f8a7c;
+  .navigation-controls {
+    gap: 0.5em;
   }
+}
+
+// Colored filter pills (Categories / Latest / New / Hot …)
+.nav-pills {
+  gap: 0.6em;
+
+  > li {
+    --kc-pill-bg: var(--kc-blue);
+    --kc-pill-fg: #fff;
+    margin-right: 0;
+
+    &.nav-item_latest,
+    &.nav-item_unread {
+      --kc-pill-bg: var(--kc-red);
+    }
+
+    &.nav-item_new {
+      --kc-pill-bg: var(--kc-green);
+      --kc-pill-fg: var(--kc-green-ink);
+    }
+
+    &.nav-item_hot,
+    &.nav-item_top {
+      --kc-pill-bg: var(--kc-orange);
+      --kc-pill-fg: #fff;
+    }
+
+    a {
+      padding: 0.7em 1.4em;
+      font-size: var(--font-up-1);
+      color: var(--kc-pill-fg);
+      background: var(--kc-pill-bg);
+      border: 1px solid transparent;
+      border-radius: 2px;
+      transition: filter 0.2s ease;
+
+      &:hover,
+      &:focus-visible {
+        color: var(--kc-pill-fg);
+        background: var(--kc-pill-bg);
+        filter: brightness(0.92);
+      }
+
+      &.active {
+        color: var(--kc-pill-fg);
+        background: var(--kc-pill-bg);
+        box-shadow:
+          0 0 0 2px var(--secondary),
+          0 0 0 4px var(--kc-pill-bg);
+      }
+    }
+  }
+}
+
+// Toolbar buttons
+#create-topic,
+.btn-default#create-topic {
+  padding: 0.7em 1.1em;
+  font-size: var(--font-up-1);
+  color: var(--kc-green-ink);
+  background: var(--kc-green);
+  border-radius: 2px;
+
+  .d-icon {
+    color: var(--kc-green-ink);
+    font-size: 1.25em;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: var(--kc-green);
+    filter: brightness(0.94);
+  }
+}
+
+.categories-admin-dropdown .select-kit-header,
+.navigation-controls .btn-default:not(#create-topic) {
+  background: var(--secondary);
+  border: 1px solid var(--primary-low-mid);
+  border-radius: 2px;
 }
 
 // Category Boxes
 .category-boxes {
   display: grid;
-  margin-top: 2em;
+  margin-top: 0;
   gap: 1.5em;
-  grid-template-columns: 32% 32% 32%;
-  border-radius: var(--sublime-border-radius);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  // A lone card on the last row spans the full width (e.g. Staff Central)
+  .category-box:last-child:nth-child(3n + 1) {
+    grid-column: 1 / -1;
+
+    .description {
+      max-width: 75ch;
+      margin-inline: auto;
+    }
+  }
 
   .category-box {
     width: 100%;
     margin: 0;
     overflow: hidden;
-    border: none;
-    border-top: 2px solid;
+    border: 1px solid var(--kc-border);
+    border-top: 2px solid var(--kc-blue) !important; // override inline category color
     background: var(--category-box-bg);
-    border-radius: var(--sublime-border-radius);
-    box-shadow: 0 3px 6px 0 rgb(2, 47, 57, 0.14);
+    border-radius: 2px;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
 
     .category-box-inner {
       border: none;
       padding: 0;
 
       .category-details {
-        padding: 0.8em 1em 0.2em 1em;
+        padding: 1.75em 1.5em 1.5em;
       }
+    }
+
+    // Centered icon + title
+    .category-box-heading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+
+      a,
+      h3,
+      .badge-category__wrapper,
+      .badge-category {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5em;
+      }
+
+      h3,
+      .badge-category__name,
+      .category-name {
+        font-size: var(--font-up-3);
+        font-weight: 700;
+        color: var(--primary);
+      }
+
+      .d-icon,
+      .badge-category__icon {
+        color: var(--kc-blue) !important; // override category color
+        font-size: 2.2rem;
+        margin: 0 0 0.15em;
+      }
+
+      // hide the small colored square badge; the icon carries the identity
+      .badge-category:not(.--style-icon, .--style-emoji)::before {
+        display: none;
+      }
+    }
+
+    .category-logo {
+      margin: 0 auto 0.5em;
     }
 
     &:hover {
@@ -183,13 +319,34 @@ body.has-full-page-chat #main-outlet {
   }
 
   .description {
-    padding-top: 10px;
+    padding-top: 0.9em;
+    font-size: var(--font-down-1);
+    line-height: 1.55;
+    text-align: left;
     color: var(--category-box-font-color);
+  }
+
+  @media screen and (width <= 1100px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    .category-box:last-child:nth-child(3n + 1) {
+      grid-column: auto;
+    }
+
+    .category-box:last-child:nth-child(2n + 1) {
+      grid-column: 1 / -1;
+    }
   }
 }
 
 @media (width <= 960px) {
   .category-boxes.with-logos.with-subcategories {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width <= 700px) {
+  .category-boxes {
     grid-template-columns: 1fr;
   }
 }

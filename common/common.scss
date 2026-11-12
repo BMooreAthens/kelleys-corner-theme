@@ -49,3 +49,19 @@ input[type="color"]:focus,
 .nav-pills > li a.active::after {
   display: none;
 }
+
+// Kelley's Corner hero banner (a single image with the text baked in)
+.kc-banner {
+  margin-bottom: 2.5em;
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 2px;
+  }
+
+  @media screen and (width <= 700px) {
+    margin-bottom: 1.5em;
+  }
+}

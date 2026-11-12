@@ -1,0 +1,7 @@
+show_banner:
+  default: true
+banner_alt:
+  default: "The Athens Paper Community — Kelley's Corner. It all starts with paper. And paper starts with you. Share ideas, find answers, and make something great together."
+banner_image:
+  type: upload
+  default: ""

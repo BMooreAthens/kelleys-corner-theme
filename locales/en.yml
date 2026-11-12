@@ -1,3 +1,7 @@
 en:
   theme_metadata:
-    description: "A sublime theme for Discourse."
+    description: "The Kelley's Corner theme for the Athens Paper community."
+    settings:
+      show_banner: "Show the Kelley's Corner banner at the top of the homepage and top-level topic lists (Latest, New, Hot, etc.)."
+      banner_alt: "Text read aloud by screen readers in place of the banner image. Keep it in sync with the words in the image."
+      banner_image: "Optional replacement banner image. Leave empty to use the bundled Kelley's Corner banner. Use a wide image with the same 3.2:1 shape (e.g. 2496×780)."

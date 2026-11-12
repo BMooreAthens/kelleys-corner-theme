@@ -1,25 +1,36 @@
 {
-  "name": "🌸 Sublime Theme",
-  "authors": "Discourse",
+  "name": "Kelley's Corner",
+  "authors": "Athens Paper (forked from Discourse Sublime Theme)",
   "about_url": "https://meta.discourse.org/t/discourse-sublime-theme/242048",
   "license_url": "https://github.com/discourse/discourse-sublime-theme/blob/main/LICENSE",
   "color_schemes": {
-    "sublime-light": {
-      "primary": "000000",
+    "kelleys-corner-light": {
+      "primary": "1f2329",
       "secondary": "ffffff",
-      "tertiary": "29A0B1",
-      "highlight": "CFE0EA",
+      "tertiary": "3a6fb5",
+      "quaternary": "1f3256",
+      "highlight": "e4ecf7",
+      "danger": "e5483e",
+      "success": "6f9a2e",
+      "love": "e5483e",
       "header_background": "ffffff",
-      "header_primary": "111111"
+      "header_primary": "1f3256"
     },
-    "sublime-dark": {
+    "kelleys-corner-dark": {
       "primary": "f2f2f2",
-      "secondary": "000000",
-      "tertiary": "29A0B1",
-      "highlight": "CFE0EA",
-      "header_background": "111111",
+      "secondary": "111418",
+      "tertiary": "6f9bd6",
+      "quaternary": "c9d6ee",
+      "highlight": "2a3a52",
+      "danger": "e5483e",
+      "success": "9cc25a",
+      "love": "e5483e",
+      "header_background": "111418",
       "header_primary": "dddddd"
     }
+  },
+  "assets": {
+    "banner": "assets/banner.webp"
   },
   "screenshots": ["screenshots/light.webp", "screenshots/dark.webp"]
 }

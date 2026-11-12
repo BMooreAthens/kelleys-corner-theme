@@ -1,11 +1,11 @@
 $light-bg-gradient:
   linear-gradient(180deg, #fff 0%, rgb(255, 255, 255, 0) 16%),
-  linear-gradient(90deg, #f1f1f1 0%, #b4ced6 28%, #ffe5db 100%);
+  linear-gradient(90deg, #c3d3da 0%, #eef2f3 35%, #f6f8f4 60%, #e8f1d8 100%);
 $dark-bg-gradient:
   linear-gradient(180deg, #000 0%, rgb(20, 24, 28, 0) 16%),
-  linear-gradient(90deg, #000 0%, #28313b 28%, #485461 100%);
-$category-hover-shadow-light: 0px 10px 30px 0px rgb(2, 47, 57, 0.1);
-$category-hover-shadow-dark: 0px -1px 40px 0px rgb(134, 134, 134, 0.213);
+  linear-gradient(90deg, #000 0%, #1f2b3a 35%, #2a3424 100%);
+$category-hover-shadow-light: 0 8px 24px 0 rgb(31, 50, 86, 0.08);
+$category-hover-shadow-dark: 0 -1px 40px 0 rgb(134, 134, 134, 0.213);
 
 :root {
   --sublime-border-radius: 4px;
@@ -15,9 +15,16 @@ $category-hover-shadow-dark: 0px -1px 40px 0px rgb(134, 134, 134, 0.213);
       $category-hover-shadow-light,
       $category-hover-shadow-dark
     )};
-  --sidebar-highlight: #2b7c85;
-  --category-box-font-color: #{dark-light-choose(
-      $primary-med-or-secondary-high,
-      #858585
-    )};
+  --category-box-font-color: #{dark-light-choose($primary-medium, #9a9a9a)};
+
+  // Kelley's Corner palette
+  --kc-blue: #3a6fb5;
+  --kc-red: #e5483e;
+  --kc-green: #c5dd94;
+  --kc-green-ink: #1f2a12;
+  --kc-orange: #f0952e;
+  --kc-blue-soft: #{dark-light-choose(#e4ecf7, #1d2a3d)};
+  --kc-border: #{dark-light-choose(#d9dee3, #333)};
+  --kc-frame-border: #{dark-light-choose(#9fb0c2, #4a5562)};
+  --sidebar-highlight: var(--kc-blue);
 }

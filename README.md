@@ -1,61 +1,27 @@
-# :cherry_blossom: Sublime theme
+# Kelley's Corner theme
 
-A sublime theme for Discourse.
-
-## Features
-
-A simple and sublime theme for Discourse that is designed from scratch to integrate well with the sidebar.
-
-### Light mode
-
-**Categories page:**
-
-![categories page light mode](images/categories-page-light.webp)
-
-**Latest page:**
-
-![latest page light mode](screenshots/light.webp)
-
-### Dark mode
-
-**Categories page:**
-
-![categories page dark mode](images/categories-page-dark.webp)
-
-**Latest page:**
-
-![latest page dark mode](screenshots/dark.webp)
-
----
+The Discourse theme for Kelley's Corner, the Athens Paper community. Forked from the Discourse [Sublime theme](https://meta.discourse.org/t/discourse-sublime-theme/242048).
 
 ## Theme configuration
 
-Change the following settings for this theme to render properly.
-
 ### Edit Theme
 
-Go to **Admin > Themes & components** (`/admin/config/customize/themes`) page to edit Sublime theme.
+Go to **Admin > Themes & components** (`/admin/config/customize/themes`) and edit the Kelley's Corner theme.
 
-- in **Dark color palette** dropdown select `sublime-dark`
-
-  ![theme dark color palette](/images/theme-dark-color-palette.webp)
+- Set the **Light color palette** to `kelleys-corner-light` and the **Dark color palette** to `kelleys-corner-dark`.
+- The banner image ships with the theme (`assets/banner.webp`), text included. To change it, upload a replacement to **banner_image** and update **banner_alt** to match its wording.
 
 ### Interface & layout
 
-Go to **Admin > Interface & layout** (`/admin/config/interface`) page.
+Go to **Admin > Interface & layout** (`/admin/config/interface`).
 
-- in **Desktop category page style** dropdown select `Boxes with Subcategories`
+- Set **Desktop category page style** to `Boxes with Subcategories`.
 
-  ![desktop category page style](images/desktop-category-page-style.webp)
+### Categories
+
+- Give each category an icon (category **Settings > Style > Icon**); the card icons and sidebar squares come from these.
+- Category colors drive the sidebar squares. Card top borders and icons are always the theme blue.
 
 ### Welcome banner
 
-Go to **Admin > Welcome banner** (`/admin/config/welcome-banner`) page.
-
-- in **Enabled on themes...** dropdown select `Sublime Theme`
-
-  ![welcome banner themes](images/welcome-banner-enable.webp)
-
-- **Location** should be set to `Below site header`
-
-  ![welcome banner settings](images/welcome-banner-location-setting.webp)
+The theme renders its own hero banner, so turn off Discourse's built-in welcome banner (**Admin > Welcome banner**) for this theme.
