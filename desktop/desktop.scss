@@ -263,33 +263,118 @@ body.has-full-page-chat #main-outlet {
   border-radius: 2px;
 }
 
-// Category Boxes
-.category-boxes {
+// Category cards
+//
+// The mockup's cards work with either "Desktop category page style" setting:
+// "Boxes" (.category-boxes) and the default list (table.category-list) are
+// both laid out as the same 3-column grid of cards.
+
+// Column count steps down on narrower screens
+:root {
+  --kc-card-columns: 3;
+
+  @media screen and (width <= 1100px) {
+    --kc-card-columns: 2;
+  }
+
+  @media screen and (width <= 700px) {
+    --kc-card-columns: 1;
+  }
+}
+
+@mixin kc-card-grid {
   display: grid;
-  margin-top: 0;
   gap: 1.5em;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--kc-card-columns), minmax(0, 1fr));
+  margin-top: 0;
 
   // A lone card on the last row spans the full width (e.g. Staff Central)
-  .category-box:last-child:nth-child(3n + 1) {
+  > :last-child:nth-child(3n + 1) {
     grid-column: 1 / -1;
 
-    .description {
+    .description,
+    .category-description {
       max-width: 75ch;
       margin-inline: auto;
     }
   }
 
+  @media screen and (width <= 1100px) {
+    > :last-child:nth-child(3n + 1) {
+      grid-column: auto;
+    }
+
+    > :last-child:nth-child(2n + 1) {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+@mixin kc-card {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--kc-border);
+  border-top: 2px solid var(--kc-blue) !important; // override category color
+  background: var(--category-box-bg);
+  border-radius: 2px;
+  box-shadow: none;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: var(--category-hover-shadow);
+  }
+}
+
+// Centered icon + bold title. The icon comes from our category-title-before
+// connector (javascripts/discourse/connectors/category-title-before).
+@mixin kc-card-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
+  margin: 0;
+  font-size: var(--font-up-3);
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--primary);
+
+  .kc-box-icon {
+    display: flex;
+    font-size: 2.2rem;
+    color: var(--kc-blue);
+
+    .d-icon {
+      color: inherit;
+    }
+
+    img.emoji {
+      width: 1em;
+      height: 1em;
+    }
+  }
+}
+
+@mixin kc-card-description {
+  display: block;
+  padding-top: 0.9em;
+  margin: 0;
+  overflow: visible;
+  font-size: var(--font-down-1);
+  line-height: 1.55;
+  text-align: left;
+  color: var(--category-box-font-color);
+  -webkit-line-clamp: unset; // show the full description, not 4 lines
+}
+
+// "Boxes" layouts
+.category-boxes {
+  @include kc-card-grid;
+
   .category-box {
-    width: 100%;
-    margin: 0;
-    overflow: hidden;
-    border: 1px solid var(--kc-border);
-    border-top: 2px solid var(--kc-blue) !important; // override inline category color
-    background: var(--category-box-bg);
-    border-radius: 2px;
-    box-shadow: none;
-    transition: box-shadow 0.2s ease;
+    @include kc-card;
 
     .category-box-inner {
       border: none;
@@ -300,82 +385,85 @@ body.has-full-page-chat #main-outlet {
       }
     }
 
-    // Centered icon + title (icon comes from our category-title-before connector)
     .category-box-heading {
       margin-bottom: 0;
-      text-align: center;
 
       h3 {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.6em;
-        margin: 0;
-        font-size: var(--font-up-3);
-        font-weight: 700;
-        text-align: center;
-        color: var(--primary);
-      }
-
-      .kc-box-icon {
-        display: flex;
-        font-size: 2.2rem;
-        color: var(--kc-blue);
-
-        .d-icon {
-          color: inherit;
-        }
-
-        img.emoji {
-          width: 1em;
-          height: 1em;
-        }
+        @include kc-card-title;
       }
     }
 
     .category-logo {
       margin: 0 auto 0.5em;
     }
-
-    &:hover {
-      box-shadow: var(--category-hover-shadow);
-    }
   }
 
   .description {
-    display: block;
-    padding-top: 0.9em;
-    margin-bottom: 0;
-    overflow: visible;
-    font-size: var(--font-down-1);
-    line-height: 1.55;
-    text-align: left;
-    color: var(--category-box-font-color);
-    -webkit-line-clamp: unset; // show the full description, not 4 lines
+    @include kc-card-description;
+  }
+}
+
+// Default list layout: turn the table into cards
+body.categories-list
+  table.category-list:not(.subcategories-with-subcategories, .with-topics) {
+  display: block;
+  border: none;
+
+  > thead {
+    display: none;
   }
 
-  @media screen and (width <= 1100px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  > tbody {
+    @include kc-card-grid;
+    border: none;
 
-    .category-box:last-child:nth-child(3n + 1) {
-      grid-column: auto;
+    > tr {
+      @include kc-card;
+      display: block;
+
+      > td {
+        display: none; // topic counts / latest columns aren't on the cards
+      }
+
+      > td.category {
+        display: block;
+        padding: 1.75em 1.5em 1.5em;
+        border: none;
+        width: auto;
+      }
+    }
+  }
+
+  td.category {
+    > h3 {
+      @include kc-card-title;
+
+      .category-title-link,
+      .category-text-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6em;
+        color: var(--primary);
+      }
     }
 
-    .category-box:last-child:nth-child(2n + 1) {
-      grid-column: 1 / -1;
+    .category-description {
+      @include kc-card-description;
+    }
+
+    .subcategories {
+      justify-content: center;
+      margin-top: 1em;
     }
   }
 }
 
-@media (width <= 960px) {
-  .category-boxes.with-logos.with-subcategories {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (width <= 700px) {
-  .category-boxes {
-    grid-template-columns: 1fr;
+// Only one icon on the cards: hide any icon core draws next to the name
+.category-boxes .category-box-heading h3,
+body.categories-list td.category > h3 {
+  &:has(.kc-box-icon) .d-icon:not(.kc-box-icon .d-icon) {
+    display: none;
   }
 }
 
@@ -412,5 +500,40 @@ body:not(.has-sidebar-page).has-full-page-chat {
       var(--composer-vh, 1vh) * 100 - var(--main-outlet-offset, 0px) -
         1px - var(--chat-header-offset, 0) - var(--composer-height, 0px) - 82px
     );
+  }
+}
+
+// Sidebar categories: colored squares (like the mockup) even when a category
+// uses an icon or emoji style. Core puts the category color inline on the
+// prefix, so currentColor is the category color.
+.sidebar-section-wrapper[data-section-name="categories"]
+  .sidebar-section-link-prefix:is(.icon, .emoji)[style] {
+  .prefix-icon,
+  .prefix-emoji {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    background: currentcolor;
+    border-radius: 1px;
+  }
+
+  // Restricted categories (e.g. Staff Central) show just the lock
+  &:has(.prefix-badge) {
+    &::before {
+      display: none;
+    }
+
+    .prefix-badge {
+      position: static;
+      width: 0.9em;
+      height: 0.9em;
+      padding: 0;
+      margin: 0;
+      color: var(--primary-high);
+    }
   }
 }
