@@ -521,6 +521,11 @@ body:not(.has-sidebar-page).has-full-page-chat {
     border-radius: 1px;
   }
 
+  // Categories still on Discourse's default blue get the mockup palette
+  &[style*="0088cc" i]::before {
+    background: var(--kc-square-color, currentcolor);
+  }
+
   // Restricted categories (e.g. Staff Central) show just the lock
   &:has(.prefix-badge) {
     &::before {
@@ -535,5 +540,36 @@ body:not(.has-sidebar-page).has-full-page-chat {
       margin: 0;
       color: var(--primary-high);
     }
+  }
+}
+
+// Mockup square palette, cycled by position in the sidebar list. Applied only
+// to categories still using the default #0088CC color.
+.sidebar-section-wrapper[data-section-name="categories"]
+  .sidebar-section-link-wrapper {
+  &:nth-child(6n + 1),
+  &:nth-child(6n + 5) {
+    --kc-square-color: var(--kc-blue);
+  }
+
+  &:nth-child(6n + 2) {
+    --kc-square-color: #1f3256;
+  }
+
+  &:nth-child(6n + 3) {
+    --kc-square-color: var(--kc-orange);
+  }
+
+  &:nth-child(6n + 4) {
+    --kc-square-color: var(--kc-green);
+  }
+
+  &:nth-child(6n + 6) {
+    --kc-square-color: #8b1d14;
+  }
+
+  // categories using the plain "square" style
+  .sidebar-section-link-prefix.square[style*="0088cc" i] .prefix-square {
+    background: var(--kc-square-color) !important; // override inline color
   }
 }
